@@ -4,12 +4,16 @@ const port = 8000;
 const connectDB = require('./db/dbConnection');
 const User = require('./db/user');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 //middleware for parsing JSON 
 
 // app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
+// enable cors
+app.use(cors());
 
 //Registration
 app.post('/register', async(req, res) => {
