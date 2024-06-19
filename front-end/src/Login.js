@@ -44,19 +44,30 @@ export default function Login() {
 
   return (
     <div>
-        <h1> Login Page </h1>
+        <h1 className='text-center text-3xl p-5 mt-10 mb-8 font-bold underline'> Log-In </h1>
 
         <form onSubmit={handleLoginSubmit}>
-            {/* for username */}
-            <input type='text' name='username' placeholder='username' value={loginData.username} onChange={handleLoginChange} required></input>
-            
-            {/* for password */}
-            <input type='password' name='password' placeholder='password' value={loginData.password} onChange={handleLoginChange} required></input>
+            <div className='flex flex-col items-center p-5 gap-5'>
+                {/* for username */}
+                <div className='flex flex-col text-center gap-3'>
+                    <h2 className='text-left font-medium'>Username: </h2>
+                    <input className='border-2 py-2 px-8 rounded-xl focus:outline-none border-gray-400' type='text' name='username' placeholder='username' value={loginData.username} onChange={handleLoginChange} required></input>
+                
+                {/* for password */}
+                    <h2 className='text-left font-medium'>Password: </h2>
+                    <input className='border-2 py-2 px-8 rounded-xl focus:outline-none border-gray-400' type='password' name='password' placeholder='password' value={loginData.password} onChange={handleLoginChange} required></input>
+                </div>
 
-            {/* for button */}
-            <button type='submit'>Login</button>
+                {/* for button */}
+                <div className='border-2 border-green-600 mt-7 py-4 px-20 text-xl font-semibold rounded-xl hover:bg-green-600 hover:text-white hover:transition-all hover:ease-in-out hover:duration-300 cursor-pointer'>
+                    <button type='submit'>Login</button>
+                </div>
 
-            <p>Not Registered yet? <Link to='/registration'>Register here</Link></p>
+                <div className='flex gap-4'>
+                    <p className='font-semibold'>Not Registered yet?</p>
+                    <Link className='font-medium text-blue-700 hover:text-blue-800 hover:underline' to='/registration'>Register here</Link>
+                </div>
+            </div>
         </form>
     </div>
   )
