@@ -4,6 +4,13 @@ import axios from 'axios'
 
 export default function Login() {
 
+    const [popup, setPopup] = useState({
+        visible: false,
+        message: '',
+        success: false
+      });
+      
+
     const [loginData, setLoginData] = useState({
         username:'',
         password:''
@@ -13,26 +20,37 @@ export default function Login() {
     const handleLoginSubmit = async(e) => {
         e.preventDefault();
 
+        // Simulating a successful login
+    setPopup({ visible: true, message: 'Login Successfully!', success: true });
+
         try {
             const response = await axios.post 
             ('http://localhost:8000/login', loginData);
             const {success, message} = response.data;
 
             if(success) {
-                console.log('Login Successfully')
+                // setPopup({ visible: true, message: 'Login Successfully!', success: true });
+                console.log('Login Successful:', success, message)
             }
             else {
-                console.log(message);
+                // setPopup({ visible: true, message: message || 'Login failed!', success: false });
+                console.log('Login Failed:', success, message);
             }
         }
         catch(error) {
+            setPopup({ visible: true, message: 'Login error, please try again!', success: false });
             console.error('Login error', error)
         }
         setLoginData({
             username: '',
             password: ''
-        })
-    }
+        });
+
+        // Hide popup after 3 seconds
+        setTimeout(() => {
+            setPopup((prevPopup) => ({ ...prevPopup, visible: false }));
+        }, 3000);
+    };
 
     const handleLoginChange = (e) => {
         const {name, value} = e.target;
@@ -45,6 +63,13 @@ export default function Login() {
   return (
     <div>
         <h1 className='text-center text-3xl p-5 mt-10 mb-8 font-bold underline'> Log-In </h1>
+
+        {popup.visible && (
+        <div className={`p-5 rounded-md shadow-lg ${popup.success ? 'bg-green-200 text-green-800 border-green-600' : 'bg-red-200 text-red-800 border-red-600'}`}>
+          <p>{popup.message}</p>
+        </div>
+      )}
+
 
         <form onSubmit={handleLoginSubmit}>
             <div className='flex flex-col items-center p-5 gap-5'>
